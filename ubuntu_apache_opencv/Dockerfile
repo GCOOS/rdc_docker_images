@@ -1,10 +1,10 @@
 # GCOOS HABscope applicaton Docker File
 FROM robertdcurrier/apache_ubuntu:16.04
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2018-05-21
+ENV REFRESHED_AT 2018-05-22
 
 WORKDIR /tmp
-
+ADD . /tmp
 # Update
 RUN apt-get -y update
 
@@ -27,16 +27,21 @@ RUN apt-get install -y libgtk2.0 libgtk2.0-dev
 RUN apt-get install -y libdc1394-22-dev
 RUN apt-get install -y libatlas-base-dev gfortran
 
-# Numpy, Scipy and Matplotlib
-RUN pip install numpy scipy matplotlib
-RUN pip install svgwrite
-RUN pip install ffmpy
-
 #FFMPEG
 RUN apt-get install -y ffmpeg
 
 #Video 4 Linux
 RUN apt-get install -y libv4l-dev
+
+# Install dependencies
+RUN pip install numpy
+RUN pip install scipy
+RUN pip install pillow
+RUN pip install pandas
+RUN pip install matplotlib
+RUN pip install configparser
+RUN pip install tensorflow
+RUN pip install keras
 
 # OpenCV
 WORKDIR /tmp
