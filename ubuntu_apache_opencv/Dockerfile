@@ -25,10 +25,14 @@ RUN apt-get update && \
     libatlas-base-dev \
     gfortran \
     ffmpeg \
-    libv4l-dev
+    libv4l-dev \
+    nodejs \
+    nodejs-legacy \
+    npm \
+&&  npm install -g pm2
 
 # Install dependencies
-RUN pip install ffmpy numpy pillow pandas matplotlib configparser tensorflow keras
+RUN pip install ffmpy numpy pillow pandas matplotlib configparser tensorflow keras watchdog
 
 # OpenCV
 WORKDIR /tmp
