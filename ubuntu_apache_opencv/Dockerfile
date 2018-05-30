@@ -32,7 +32,7 @@ RUN apt-get update && \
 &&  npm install -g pm2
 
 # Install dependencies
-RUN pip install ffmpy numpy pillow pandas matplotlib configparser tensorflow keras watchdog
+RUN pip install ffmpy numpy pillow pandas==0.17.1 matplotlib configparser tensorflow keras watchdog
 
 # OpenCV
 WORKDIR /tmp
