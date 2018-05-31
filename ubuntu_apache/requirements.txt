@@ -1,3 +1,4 @@
 flask
 flask_login
 pymongo
+pandas=0.17.0

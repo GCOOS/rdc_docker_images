@@ -16,7 +16,8 @@ RUN apt-get update \
         libapache2-mod-wsgi \
         python \
         python-dev \
-        python-pip
+        python-pip \
+%% pip install --upgrade pip
 
 # Install all the necessary components via pip
 RUN pip install -r requirements.txt
