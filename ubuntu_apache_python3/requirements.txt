@@ -4,4 +4,4 @@ pymongo
 numpy
 scipy
 matplotlib
-
+pandas
