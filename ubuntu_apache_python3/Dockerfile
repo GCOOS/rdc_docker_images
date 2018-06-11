@@ -9,9 +9,15 @@ WORKDIR /tmp
 # System tools
 RUN apt-get update \
 && apt-get install -y \
-   python3 \
-   build-essential \
-   python3-pip \
+        mlocate \
+        curl \
+        apache2 \
+        libapache2-mod-wsgi-py3 \
+        python3 \
+        python3-dev \
+        python3-pip \
+        build-essential \
+        pkg-config \
 && pip3 install --upgrade pip
 
 # Install all the necessary components via pip

@@ -14,4 +14,5 @@ cd ~/src/docker/docker_images/gncutils
 
 # Build image
 docker build -t robertdcurrier/gncutils .
+docker push robertdcurrier/gncutils
 

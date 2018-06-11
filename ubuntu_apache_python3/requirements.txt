@@ -5,3 +5,4 @@ numpy
 scipy
 matplotlib
 pandas
+erddapy==0.1.3
