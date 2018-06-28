@@ -12,8 +12,9 @@ RUN apt-get install -y mlocate \
 # to go through the whole build process each time we restart
 # But it does mean we need to rebuild the image and push if the src changes
 COPY src/gncutils /opt/gncutils
-COPY gandalf_build_nc.sh /opt/gncutils
 
 WORKDIR /opt/gncutils
 RUN python setup.py build \
 && python setup.py install
+# Add seawater and geojson
+RUN conda install -y -c conda-forge seawater geojson
