@@ -17,4 +17,10 @@ WORKDIR /opt/gncutils
 RUN python setup.py build \
 && python setup.py install
 # Add seawater and geojson
-RUN conda install -y -c conda-forge seawater geojson
+RUN conda install -y -c conda-forge seawater geojson \
+&& apt-get install -y gnupg2 \
+&& curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh \
+&& bash nodesource_setup.sh \
+&& apt-get install -y nodejs \
+&& npm install -g pm2
+
