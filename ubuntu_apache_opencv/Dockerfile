@@ -8,6 +8,9 @@ WORKDIR /tmp
 # system stuff
 RUN apt-get update && \
     apt-get install -y \
+    python3 \
+    python3-pip \
+    python-pip \
     git \
     build-essential \
     cmake \
@@ -31,9 +34,12 @@ RUN apt-get update && \
     npm \
 &&  npm install -g pm2
 
+# Always upgrade pip
+RUN pip2 install --upgrade pip
+RUN pip3 install --upgrade pip
 # Install dependencies
-RUN pip install ffmpy numpy pillow pandas==0.17.1 matplotlib configparser tensorflow keras watchdog
-
+RUN pip2 install pillow ffmpy numpy pandas==0.17.1  configparser tensorflow keras watchdog dateparser matplotlib
+RUN pip3 install geopy geojson wget pandas
 # OpenCV
 WORKDIR /tmp
 RUN git clone https://github.com/Itseez/opencv.git 
