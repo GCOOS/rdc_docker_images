@@ -39,7 +39,7 @@ RUN pip2 install --upgrade pip
 RUN pip3 install --upgrade pip
 # Install dependencies
 RUN pip2 install pillow ffmpy numpy pandas==0.17.1  configparser tensorflow keras watchdog dateparser matplotlib
-RUN pip3 install geopy geojson wget pandas
+RUN pip3 install geopy geojson wget pandas dateparser pymongo
 # OpenCV
 WORKDIR /tmp
 RUN git clone https://github.com/Itseez/opencv.git 
