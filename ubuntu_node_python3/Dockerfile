@@ -1,7 +1,7 @@
-# Ubuntu 16.04 w/apache and mod_wsgi; Python3 only
-FROM ubuntu:16.04
+# Ubuntu 18.04 w/apache, nodejs and Python3
+FROM ubuntu:18.04
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2019-05-18
+ENV REFRESHED_AT 2018-06-01
 
 ADD . /tmp
 WORKDIR /tmp
@@ -24,3 +24,7 @@ RUN apt-get update \
 # Install all the necessary components via pip
 RUN pip3 install -r requirements.txt
 
+# Node stuff
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -  \
+&& apt-get install -y nodejs \
+&& npm install -g pm2
