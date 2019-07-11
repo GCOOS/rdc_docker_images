@@ -1,0 +1,14 @@
+flask
+flask_login
+pymongo
+numpy
+scipy
+matplotlib
+pandas
+erddapy==0.1.3
+requests
+seawater
+geojson
+cmocean
+pydub
+ggplot
