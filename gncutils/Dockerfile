@@ -1,12 +1,23 @@
 # GCOOS DMAC Kerfoot gncutils Docker File
-FROM continuumio/anaconda3
+FROM ubuntu:18.04
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2018-06-06
+ENV REFRESHED_AT 2019-09-27
 
-# We no longer use cron as it borked -- we use internal scheduler
-RUN apt-get install -y mlocate \
+ADD . /tmp
+WORKDIR /tmp
+
+RUN apt-get update \
+&& apt-get upgrade -y \
+&& apt-get install -y python-tk \
 && apt-get install -y gcc \
+&& apt-get install -y vim \
+&& apt-get install -y gnupg2 \
+&& apt-get install -y python \
+&& apt-get install -y python-setuptools \
+&& apt-get install -y python-pip \
 && apt-get clean
+
+RUN pip install -r requirements.txt 
 
 # Add Kerfoot's tools -- we do this here as we don't want
 # to go through the whole build process each time we restart
@@ -16,11 +27,3 @@ COPY src/gncutils /opt/gncutils
 WORKDIR /opt/gncutils
 RUN python setup.py build \
 && python setup.py install
-# Add seawater and geojson
-RUN conda install -y -c conda-forge seawater geojson \
-&& apt-get install -y gnupg2 \
-&& curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh \
-&& bash nodesource_setup.sh \
-&& apt-get install -y nodejs \
-&& npm install -g pm2
-
