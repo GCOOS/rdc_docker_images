@@ -8,7 +8,6 @@ WORKDIR /tmp
 
 RUN apt-get update \
 && apt-get upgrade -y \
-&& apt-get install -y python-tk \
 && apt-get install -y gcc \
 && apt-get install -y vim \
 && apt-get install -y gnupg2 \
