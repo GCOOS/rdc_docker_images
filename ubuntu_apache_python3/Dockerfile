@@ -1,13 +1,14 @@
 # Ubuntu 16.04 w/apache and mod_wsgi; Python3 only
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2019-05-18
+ENV REFRESHED_AT 2019-10-08
 
 ADD . /tmp
 WORKDIR /tmp
 
 # System tools
 RUN apt-get update \
+&& apt-get upgrade -y \
 && apt-get install -y \
         mlocate \
         curl \
@@ -16,7 +17,6 @@ RUN apt-get update \
         python3 \
         python3-dev \
         python3-pip \
-        python3-tk \
         build-essential \
         pkg-config \
         vim \
