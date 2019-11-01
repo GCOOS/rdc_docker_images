@@ -1,12 +1,12 @@
 # Ubuntu 16.04 w/apache and mod_wsgi; Python3 only
 FROM ubuntu:18.04
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2019-10-08
+ENV REFRESHED_AT 2019-10-09
 
 ADD . /tmp
 WORKDIR /tmp
 
-# System tools
+# System tools -- added wget and ssh for gandalf_harvest
 RUN apt-get update \
 && apt-get upgrade -y \
 && apt-get install -y \
@@ -20,6 +20,9 @@ RUN apt-get update \
         build-essential \
         pkg-config \
         vim \
+        wget \
+        ssh \
+        rsync \
 && pip3 install --upgrade pip
 
 # Install all the necessary components via pip
