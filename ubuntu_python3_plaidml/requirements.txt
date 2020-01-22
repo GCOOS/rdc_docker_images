@@ -1,0 +1,4 @@
+plaidml-keras
+plaidbench
+opencv-python
+pillow
