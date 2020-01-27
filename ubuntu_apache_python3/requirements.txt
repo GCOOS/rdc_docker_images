@@ -11,3 +11,6 @@ seawater
 geojson
 cmocean
 natsort
+pillow
+simplekml
+jsmin

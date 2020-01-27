@@ -1,7 +1,7 @@
-# Ubuntu 16.04 w/apache and mod_wsgi; Python3 only
+# Ubuntu 18.04 w/apache and mod_wsgi; Python3 only
 FROM ubuntu:18.04
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2019-10-09
+ENV REFRESHED_AT 2020-01-27
 
 ADD . /tmp
 WORKDIR /tmp
@@ -28,4 +28,3 @@ RUN apt-get update \
 
 # Install all the necessary components via pip
 RUN pip3 install -r requirements.txt
-
