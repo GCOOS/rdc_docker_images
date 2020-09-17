@@ -1,0 +1,8 @@
+pillow
+opencv-python
+scipy
+pandas
+matplotlib
+gsw
+xarray
+cmocean
