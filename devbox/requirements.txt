@@ -6,3 +6,4 @@ matplotlib
 gsw
 xarray
 cmocean
+nameko
