@@ -1,3 +1,4 @@
 pillow
 opencv-python
 scipy
+ffmpy
