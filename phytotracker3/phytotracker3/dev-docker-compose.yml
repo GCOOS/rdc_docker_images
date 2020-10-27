@@ -1,0 +1,7 @@
+  tools:
+    image: robertdcurrier/tensorflow-gpu_python3:latest
+    user: "${UID}:${GID}"
+    command: tail -f /dev/null
+    volumes:
+      - .:/phytotracker3
+      - /Volumes/data/phyto3:/data/phyto3

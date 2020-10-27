@@ -1,4 +1,4 @@
 pillow
 opencv-python
 scipy
-ffmpy
+ffmpeg-python
