@@ -14,3 +14,7 @@ natsort
 pillow
 simplekml
 jsmin
+pathtools
+lxml
+mpld3
+dateparser
