@@ -2,7 +2,8 @@
 # coding: utf-8
 """This is the NVIDIA GPU version.
 
-Modified: 2020-10-02
+Modified: 2020-10-29
+Beginning integration of upload watcher functionality
 """
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
@@ -16,7 +17,10 @@ import logging
 import ffmpeg
 import argparse
 import cv2 as cv2
+from watchdog.observers import Observer
+from watchdog.events import PatternMatchingEventHandler
 
+# Keep TF from yapping incessantly
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 import tensorflow
@@ -28,10 +32,18 @@ import poi_target as poi
 MAX_CELLS = 0
 THUMB_COUNT = 0
 
+class hsVideoHandler(PatternMatchingEventHandler):
+    def on_created(self,event):
+        file_path = event.src_path
+        file_name = str.lower(os.path.split(file_path)[1])
+        logging.warning("hsVideoHandler(): File event detected")
+        logging.warning("File Path: %s" % (file_path))
+
+
 def string_to_tuple(the_str):
     """
     Converts string to tuple for use in OpenCV
-    drawing functions. Sort of an ass-backswards methond, but...
+    drawing functions. Sort of an ass-backswards method, but...
 
     Author: robertdcurrier@gmail.com
     Created:    2018-11-07
@@ -46,7 +58,7 @@ def string_to_tuple(the_str):
 
 
 def show_info():
-    """Print info when called from command line w/no options.
+    """Print info when called from command line w/no options. Help a dude out.
 
     Author: robertdcurrier@gmail.com
     Created:    2018-11-06
@@ -64,7 +76,7 @@ def show_info():
 
 
 def get_config():
-    """Get config settings from config.json.
+    """From config.json.
 
     Author: robertdcurrier@gmail.com
     Created:    2019-07-18
@@ -123,7 +135,7 @@ def load_model():
 
 
 def load_scale():
-    """Load scale file from lib.
+    """What it say.
 
     Author: robertdcurrier@gmail.com
     Created:    2018-11-06
@@ -152,7 +164,7 @@ def load_scale():
 
 
 def get_args():
-    """Get command line args.
+    """What it say.
 
     Author: robertdcurrier@gmail.com
     Created:    2018-11-06
@@ -168,6 +180,8 @@ def get_args():
                        action="store_true")
     arg_p.add_argument("-t", "--taxa", help="choose taxa")
     arg_p.add_argument("-c", "--contours", help="show contours",
+                       action="store_true")
+    arg_p.add_argument("-m", "--monitor", help="Monitor mode for production",
                        action="store_true")
     args = vars(arg_p.parse_args())
     return args
@@ -288,7 +302,7 @@ def gen_contours(contours, config, taxa):
 
 
 def classify_cell(model, cell):
-    """Classify cells.
+    """What it say.
 
     Author: robertdcurrier@gmail.com
     Created:    2018-11-06
@@ -464,7 +478,7 @@ def calc_cellcount(config, taxa, scale):
         return interp_cells
 
 
-def init_app():
+def phytotracker3():
     """Kick it."""
     config = get_config()
     args = get_args()
@@ -497,5 +511,21 @@ def ffmpeg_it(video_file):
     stream = stream.output(ofile)
     ffmpeg.run(stream)
 
+def watchdog():
+    """Turn on watchdog for file processing."""
+    logging.info('watchdog(): Entering monitoring mode for production site')
+    file_path = '/data/phyto3/tmp/'
+    observer = Observer()
+    event_handler = hsVideoHandler(patterns=["*.mp4"])
+    observer.schedule(event_handler, file_path)
+    observer.start()
+    observer.join()
+
+
 if __name__ == '__main__':
-    init_app()
+    logging.basicConfig(level=logging.INFO)
+    args = get_args()
+    if args['monitor']:
+        watchdog()
+    else:
+        phytotracker3()

@@ -1,0 +1,9 @@
+Note:
+
+If making changes ONLY to the base image, you can just build and push.
+If we've maded changes to phytotracker3 (in phytotracker3_dev) we need
+to rm the existing src folder and copy the new. Then we remove the .git from
+the new src folder.  Then, and only then, can we build. This will get the
+lastest phytotracker3 into the image.
+
+

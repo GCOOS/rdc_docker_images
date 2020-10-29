@@ -1,7 +1,7 @@
 # GCOOS DMAC Application Docker File
-FROM robertdcurrier/tensorflow-gpu_python3:latest
+FROM robertdcurrier/phytotracker3:latest
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2020-09-11
+ENV REFRESHED_AT 2020-10-29
 
 # Set the working directory to the name of the app /sban, /habscope, etc
 WORKDIR /phytotracker3

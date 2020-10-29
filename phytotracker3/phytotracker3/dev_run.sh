@@ -9,9 +9,7 @@ docker-compose down
 #echo "Pulling the latest from GitHub..."
 #git pull
 
-# Build image
-echo "Docker building..."
-docker build -t phytotracker3 .
+docker build -t phytotracker3_dev .
 
 # Up time
 echo "DEVELOPMENT MACBOOK ENVIRONMENT ENABLED!"
