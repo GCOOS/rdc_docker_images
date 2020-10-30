@@ -36,8 +36,8 @@ class hsVideoHandler(PatternMatchingEventHandler):
     def on_created(self,event):
         file_path = event.src_path
         file_name = str.lower(os.path.split(file_path)[1])
-        logging.warning("hsVideoHandler(): File event detected")
-        logging.warning("File Path: %s" % (file_path))
+        logging.debuging("hsVideoHandler(): File event detected")
+        logging.debuging("File Path: %s" % (file_path))
 
 
 def string_to_tuple(the_str):
@@ -57,19 +57,19 @@ def string_to_tuple(the_str):
     return color
 
 
-def show_info():
-    """Print info when called from command line w/no options. Help a dude out.
+def show_warning():
+    """Print warning when called from command line w/no options. Help a dude out.
 
     Author: robertdcurrier@gmail.com
     Created:    2018-11-06
     Modified:   2018-11-06
     """
-    logging.warn("show_info(): No input file specified.")
+    logging.warning("show_warning(): No input file specified.")
     config = get_config()
-    logging.warn(config['captions']['title'])
-    logging.warn("Testing load_model()")
+    logging.debug(config['captions']['title'])
+    logging.debug("Testing load_model()")
     load_model()
-    logging.warn("Testing load_scale()")
+    logging.debug("Testing load_scale()")
     load_scale()
     # Goombye
     sys.exit()
@@ -105,16 +105,16 @@ def load_model():
         model_file = config['taxa'][taxa]['model_file']
 
     if(config['system']['debug']):
-         logging.warn("Using %s as taxa and %s as model_file" % (taxa, model_file))
+         logging.debug("Using %s as taxa and %s as model_file" % (taxa, model_file))
 
     try:
         json_file = open(model_file)
         if(config['system']['debug']):
-            logging.warn("load_model(): Loaded %s model_file successfully" % taxa)
+            logging.debug("load_model(): Loaded %s model_file successfully" % taxa)
     except IOError:
-        logging.warn("load_model(): Failed to open %s model_file" % model_file)
+        logging.debug("load_model(): Failed to open %s model_file" % model_file)
         sys.exit()
-
+    logging.debug('load_model(%s)' % model_file)
     model_json = json_file.read()
     json_file.close()
     model = tensorflow.keras.models.model_from_json(model_json)
@@ -129,7 +129,7 @@ def load_model():
     try:
         model.load_weights(weights_file)
     except IOError:
-        logging.warn("load_model(): Failed to open %s" % weights_file)
+        logging.debug("load_model(): Failed to open %s" % weights_file)
         sys.exit()
     return model
 
@@ -153,13 +153,13 @@ def load_scale():
     try:
         scale_file = open(scale_file)
     except IOError:
-        logging.warn("load_scale(): Failed to open %s" % scale_file)
+        logging.debug("load_scale(): Failed to open %s" % scale_file)
         sys.exit()
 
     scale = json.loads(scale_file.read())
     scale_file.close()
     if(config['system']['debug']):
-        logging.warn("Loaded %s scale successfully" % taxa)
+        logging.debug("Loaded %s scale successfully" % taxa)
     return scale
 
 
@@ -192,11 +192,11 @@ def validate_taxa(args):
     config = get_config()
     taxa = args["taxa"]
     if config['system']['debug']:
-        logging.warn("validate_taxa(): Validating %s" % taxa)
+        logging.debug("validate_taxa(): Validating %s" % taxa)
     if taxa in config['taxa'].keys():
-        logging.warn("validate_taxa(): Found %s taxa settings" % taxa)
+        logging.debug("validate_taxa(): Found %s taxa settings" % taxa)
     else:
-        logging.warn("validate_taxa(): %s not found!" % taxa)
+        logging.debug("validate_taxa(): %s not found!" % taxa)
         sys.exit()
 
 
@@ -218,7 +218,7 @@ def process_video(file_name, model, taxa):
 
     config = get_config()
     scale = load_scale()
-    logging.warn("process_video(): Using taxa %s" % taxa)
+    logging.debug("process_video(): Using taxa %s" % taxa)
 
     video_file = cv2.VideoCapture(file_name)
     size = (int(video_file.get(cv2.CAP_PROP_FRAME_WIDTH)),
@@ -233,18 +233,17 @@ def process_video(file_name, model, taxa):
     con_min = config['taxa'][taxa]['con_min']
     con_max = config['taxa'][taxa]['con_max']
     max_cons = config['taxa'][taxa]['max_cons']
-    if config['system']['debug']:
-        logging.warn("process_video(): max_frames %d" % max_frames)
-        logging.warn("process_video(): loading %s" % file_name)
-        logging.warn("process_video(): Skipping %d frames" % skip_frames)
-        logging.warn("process_video(): thresh_min %d" % thresh_min)
-        logging.warn("process_video(): thresh_max %d" % thresh_max)
-        logging.warn("process_video(): MOG_history %d" % MOG_history)
-        logging.warn("process_video(): MOG_threshold %d" % MOG_thresh)
-        logging.warn("process_video(): con_min %d" % con_min)
-        logging.warn("process_video(): con_max %d" % con_max)
-        logging.warn("process_video(): max_cons %d" % con_max)
-        logging.warn("process_video(): learning_rate %0.6f" % learning_rate)
+    logging.debug("process_video(): max_frames %d" % max_frames)
+    logging.debug("process_video(): loading %s" % file_name)
+    logging.debug("process_video(): Skipping %d frames" % skip_frames)
+    logging.debug("process_video(): thresh_min %d" % thresh_min)
+    logging.debug("process_video(): thresh_max %d" % thresh_max)
+    logging.debug("process_video(): MOG_history %d" % MOG_history)
+    logging.debug("process_video(): MOG_threshold %d" % MOG_thresh)
+    logging.debug("process_video(): con_min %d" % con_min)
+    logging.debug("process_video(): con_max %d" % con_max)
+    logging.debug("process_video(): max_cons %d" % con_max)
+    logging.debug("process_video(): learning_rate %0.6f" % learning_rate)
     background_sub = (cv2.createBackgroundSubtractorMOG2(
         detectShadows=False, history=MOG_history,
         varThreshold=MOG_thresh))
@@ -289,6 +288,7 @@ def gen_contours(contours, config, taxa):
     Created:    2018-11-06
     Modified:   2018-11-07
     """
+    logging.debug('gen_contours(%s)' % taxa)
     good_cons = []
     con_min = config['taxa'][taxa]['con_min']
     con_max = config['taxa'][taxa]['con_max']
@@ -314,6 +314,7 @@ def classify_cell(model, cell):
     some reason we return a 2 so we can ignore or flag. Brevis
     returns a 0 and Not Brevis returns a 1.
     """
+    logging.debug('classify_cell(%s)' % model)
     if cell.shape == (40, 40, 3):
         cell = cv2.resize(cell, (40, 40))
         x = img_to_array(cell)
@@ -336,6 +337,7 @@ def target_cells(frame, good_cons, taxa, config, model):
     Created:    2018-11-06
     Modified:   2020-09-24
     """
+    logging.debug('target_cells(%s)' % taxa)
     global MAX_CELLS, THUMB_COUNT
     x_offset = config['taxa'][taxa]['x_offset']
     y_offset = config['taxa'][taxa]['y_offset']
@@ -351,7 +353,7 @@ def target_cells(frame, good_cons, taxa, config, model):
 
     for con in good_cons:
         (x_pos, y_pos, w, h) = cv2.boundingRect(con)
-        # logging.warn(cv2.contourArea(con))
+        # logging.debug(cv2.contourArea(con))
         if((w > roi_min) and (w < roi_max) and (h > roi_min) and (h < roi_max)):
             roi_match = True
             cx = 0
@@ -372,17 +374,17 @@ def target_cells(frame, good_cons, taxa, config, model):
             if args['learning']:
                 # GET THIS IN CONFIG.JSON YO
                 if THUMB_COUNT > max_thumbs:
-                    logging.warn('Max Thumbs exceeded.')
+                    logging.debug('Max Thumbs exceeded.')
                     sys.exit()
                 img_name = ('./tmp/%d.jpg' % epoch)
                 if len(roi) == 40:
                     if(config['system']['debug']):
-                        logging.warn("Writing image %s" % img_name)
+                        logging.debug("Writing image %s" % img_name)
                     cv2.imwrite(img_name, roi)
                     THUMB_COUNT+=1
                 else:
                     if(config['system']['debug']):
-                        logging.warn("Dwarf image, not writing...")
+                        logging.debug("Dwarf image, not writing...")
             if roi_match:
                 preds = classify_cell(model, roi)
                 if not args['learning']:
@@ -395,23 +397,12 @@ def target_cells(frame, good_cons, taxa, config, model):
     return cell_count
 
 
-def scale_frame(frame, args):
-    """Scale frame up or down based on '-s' args.
-
-    Author: robertdcurrier@gmail.com
-    Created:    2018-11-06
-    Modified:   2018-11-06
-    """
-    frame = cv2.resize(frame, (0, 0), fx=float(args["zoom"]),
-                       fy=float(args["zoom"]))
-    return frame
-
-
 def caption_frame(frame, config, scale, taxa, cell_count):
     """Put caption on frames. Need to add date of most recent.
 
     video processing date/time and date/time of capture
     """
+    logging.debug('caption_frame(%s, %s)' % (taxa, cell_count))
     the_date = time.strftime('%c')
     # Title
     version_text = "Version: "
@@ -467,6 +458,7 @@ def calc_cellcount(config, taxa, scale):
     Created:    2018-11-06
     Modified:   2018-11-06
     """
+    logging.debug('calc_cellcount(%s)' % taxa)
     global MAX_CELLS
     max_cells_cutoff = config['taxa'][taxa]['max_cells_cutoff']
     if MAX_CELLS < 1:
@@ -480,11 +472,12 @@ def calc_cellcount(config, taxa, scale):
 
 def phytotracker3():
     """Kick it."""
+    logging.debug('phytotracker3(): Initializing...')
     config = get_config()
     args = get_args()
 
     if (args["input"]) is None:
-        show_info()
+        show_warning()
 
     if args["taxa"]:
         validate_taxa(args)
@@ -496,24 +489,26 @@ def phytotracker3():
     tensorflow.keras.backend.set_image_data_format("channels_last")
     model = load_model()
     cpl_count = process_video(args["input"], model, taxa)
-    logging.warn("{'cpl' : %d}" % cpl_count)
-    # Wouldn't run at the end of process_video as file hadn't closed properly
     ffmpeg_it(args["output"])
+    logging.warning("{'taxa' : %s, 'cpl' : %d}" % (taxa, cpl_count))
 
 
 def ffmpeg_it(video_file):
     """OpenCV from pip can't do h264 so we have to here."""
-    logging.warn('ffmpeg_it(%s)' % video_file)
+    logging.debug('ffmpeg_it(%s)' % video_file)
     basename=(os.path.basename(video_file))
     ofile = '%s/%s_h264.mp4' % (os.path.dirname(video_file),
                                 os.path.splitext(basename)[0])
     stream = ffmpeg.input(video_file)
     stream = stream.output(ofile)
-    ffmpeg.run(stream)
+    ffmpeg.run(stream, quiet=True,overwrite_output=True)
+    logging.debug('ffmpeg_it(): Removing original non-H264 file')
+    os.remove(video_file)
+
 
 def watchdog():
     """Turn on watchdog for file processing."""
-    logging.info('watchdog(): Entering monitoring mode for production site')
+    logging.debug('watchdog(): Entering monitoring mode for production site')
     file_path = '/data/phyto3/tmp/'
     observer = Observer()
     event_handler = hsVideoHandler(patterns=["*.mp4"])
@@ -523,9 +518,13 @@ def watchdog():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.WARNING)
     args = get_args()
     if args['monitor']:
         watchdog()
     else:
+        start_time = time.time()
         phytotracker3()
+        end_time = time.time()
+        minutes = ((end_time - start_time) / 60)
+        logging.info('Processing Time: %0.2f minutes' % minutes)
