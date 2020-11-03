@@ -6,4 +6,10 @@ to rm the existing src folder and copy the new. Then we remove the .git from
 the new src folder.  Then, and only then, can we build. This will get the
 lastest phytotracker3 into the image.
 
+2020-11-03
+We removed the phytotracker3 source tree. Going back to using volume mounts
+in hsv3. We added a compile for OpenCV here, so we can write using avc1/h264 
+which requires a source compile. The pip-installed opencv does not support
+avc1 and thus requires ffmpeg, which made for a really convoluted process. 
+
 

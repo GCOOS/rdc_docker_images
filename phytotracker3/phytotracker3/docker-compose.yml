@@ -1,8 +1,0 @@
-  tools:
-    image: robertdcurrier/phytotracker3:latest
-    user: "${UID}:${GID}"
-    command: tail -f /dev/null
-    volumes:
-      - .:/phytotracker3
-      - /data/phyto3:/data/phyto3
-
