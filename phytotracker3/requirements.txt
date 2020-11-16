@@ -2,3 +2,5 @@ pillow
 scipy
 ffmpeg-python
 watchdog
+pymongo
+dateparser
