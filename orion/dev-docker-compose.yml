@@ -1,0 +1,7 @@
+  pyifcb:
+    image: continuumio/anaconda3
+    user: "${UID}:${GID}"
+    command: tail -f /dev/null
+    volumes:
+      - ~/src/apps/orion/:/orion
+      - ~/src/apps/orion/data:/data/orion
