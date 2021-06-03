@@ -30,28 +30,37 @@ RUN apt-get install -y tzdata \
         vim \
         ssh \
         rsync \
+	ttf-mscorefonts-installer \
 && pip3 install --upgrade pip
 
 COPY requirements.txt /phytotracker3
 RUN pip3 install -r requirements.txt
+RUN fc-cache -f -v
 
 # OpenCV added 2020-11-03
 WORKDIR /tmp
-RUN git clone https://github.com/Itseez/opencv.git 
+RUN git clone https://github.com/Itseez/opencv.git
 RUN git clone https://github.com/Itseez/opencv_contrib
 
+WORKDIR /tmp/opencv
+RUN git checkout 4.4.0
+WORKDIR /tmp/opencv_contrib
+RUN git checkout 4.4.0
 RUN mkdir /tmp/opencv/build
+
 WORKDIR /tmp/opencv/build/
 
 RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
-	-D CMAKE_INSTALL_PREFIX=/usr/local \
-	-D INSTALL_C_EXAMPLES=OFF \
-	-D INSTALL_PYTHON_EXAMPLES=OFF \
-	-D OPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib/modules \
-	-D BUILD_EXAMPLES=OFF \
+        -D CMAKE_INSTALL_PREFIX=/usr/local \
+        -D INSTALL_C_EXAMPLES=OFF \
+        -D INSTALL_PYTHON_EXAMPLES=OFF \
+        -D OPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib/modules \
+        -D BUILD_EXAMPLES=OFF \
         -D WITH_CUDA=OFF \
+        -D USE_GTK=ON \
         -D USE_V4L=ON .. \
 && make -j4 \
 && make install \
 && rm -rf /tmp/opencv \
 && rm -rf /tmp/opencv_contrib
+WORKDIR /phytotracker3
