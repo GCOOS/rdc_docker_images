@@ -23,6 +23,7 @@ RUN apt-get install -y tzdata \
         libv4l-dev \
         libgtk2.0 \
         libgtk2.0-dev \
+        libcanberra-gtk-module \
         libatlas-base-dev \
         gfortran \
         ffmpeg \
