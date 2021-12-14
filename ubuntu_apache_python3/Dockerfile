@@ -1,8 +1,9 @@
-# Ubuntu 18.04 w/apache and mod_wsgi; Python3 only
-FROM ubuntu:18.04
+# Ubuntu latest w/apache and mod_wsgi; Python3 only
+FROM ubuntu:latest
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2020-01-27
-
+ENV REFRESHED_AT 2021-08-11
+ENV TZ=America/New_York
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ADD . /tmp
 WORKDIR /tmp
 
@@ -10,6 +11,7 @@ WORKDIR /tmp
 RUN apt-get update \
 && apt-get upgrade -y \
 && apt-get install -y \
+        tzdata \
         mlocate \
         curl \
         apache2 \
