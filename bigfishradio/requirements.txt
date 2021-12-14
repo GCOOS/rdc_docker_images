@@ -1,0 +1,10 @@
+pillow
+opencv-python
+scipy
+ffmpeg-python
+sox
+librosa
+matplotlib
+numpy
+pydub
+natsort
