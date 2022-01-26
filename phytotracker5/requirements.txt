@@ -1,0 +1,9 @@
+tensorflow-gpu
+pillow
+scipy
+keras
+keras-resnet
+numpy
+h5py
+matplotlib
+opencv-python
