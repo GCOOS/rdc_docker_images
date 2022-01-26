@@ -7,3 +7,5 @@ numpy
 h5py
 matplotlib
 opencv-python
+ffmpeg
+pymongo
