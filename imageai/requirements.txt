@@ -1,5 +1,5 @@
 tensorflow-gpu==2.4.0
-pillow==7.0.0
+pillow==9.0.0
 scipy==1.4.1
 keras==2.4.3
 keras-resnet==0.2.0
