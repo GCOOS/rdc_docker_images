@@ -1,11 +1,9 @@
-tensorflow-gpu
 pillow
 scipy
-keras
-keras-resnet
-numpy
-h5py
 matplotlib
 opencv-python
 ffmpeg
 pymongo
+natsort
+watchdog
+mask-rcnn-12rics==0.2.3
