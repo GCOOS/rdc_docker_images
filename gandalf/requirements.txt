@@ -6,7 +6,7 @@ h5netcdf
 flask
 flask_login
 pymongo
-numpy==1.19.5
+numpy==1.22.0
 scipy
 matplotlib
 pandas==1.1.4
