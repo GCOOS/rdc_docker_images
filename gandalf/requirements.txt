@@ -1,6 +1,11 @@
+gsw
+xarray
+plotly
+netcdf4
+h5netcdf
 flask
 flask_login
-pymongo==3.12.0
+pymongo
 numpy==1.19.5
 scipy
 matplotlib
