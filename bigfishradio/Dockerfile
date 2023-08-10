@@ -1,5 +1,5 @@
 # TENSORFLOW with GPU support
-From tensorflow/tensorflow:2.0.0-gpu-py3
+From tensorflow/tensorflow:latest-gpu
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
 ENV REFRESHED_AT 2021-12-02
 
