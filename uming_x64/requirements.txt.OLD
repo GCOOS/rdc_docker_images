@@ -1,0 +1,16 @@
+plotly
+flask
+flask_login
+pymongo
+numpy
+scipy
+matplotlib
+pandas
+requests
+geojson
+geopandas
+cmocean
+natsort
+jsmin
+dateparser
+wget

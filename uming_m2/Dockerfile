@@ -7,8 +7,13 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ADD . /tmp
 WORKDIR /tmp
 
-# System tools -- added wget and ssh for gandalf_harvest
+# System tools -- added wget and ssh for uming_harvest
+#RUN apt-get update \
+#&& apt-get upgrade -y \
+#&&
 RUN  apt-get update && apt-get install -y \
+	gdal-bin \
+	libgdal-dev \
         tzdata \
         mlocate \
         curl \
