@@ -1,16 +1,12 @@
 # Ubuntu latest w/apache and mod_wsgi; Python3 only
 FROM ubuntu:22.04
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2022-06-30
+ENV REFRESHED_AT 2023-09-09
 ENV TZ=America/New_York
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ADD . /tmp
 WORKDIR /tmp
 
-# System tools -- added wget and ssh for uming_harvest
-#RUN apt-get update \
-#&& apt-get upgrade -y \
-#&&
 RUN  apt-get update && apt-get install -y \
 	gdal-bin \
 	libgdal-dev \
