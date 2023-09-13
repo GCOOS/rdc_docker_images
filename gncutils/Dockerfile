@@ -1,5 +1,5 @@
 # GCOOS DMAC Kerfoot gncutils Docker File
-FROM ubuntu:latest
+FROM ubuntu:18.04
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
 ENV REFRESHED_AT 2021-07-06
 
