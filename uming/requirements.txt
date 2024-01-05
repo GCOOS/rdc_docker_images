@@ -24,6 +24,8 @@ lxml
 mpld3
 dateparser
 wget
-twilio
-argovisHelpers
 progressbar
+openpyxl
+seaborn
+tensorflow
+scikit-learn
