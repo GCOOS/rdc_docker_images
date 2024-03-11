@@ -29,3 +29,5 @@ openpyxl
 seaborn
 tensorflow
 scikit-learn
+darts
+pynmea2
