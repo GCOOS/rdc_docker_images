@@ -31,3 +31,5 @@ tensorflow
 scikit-learn
 darts
 pynmea2
+openai
+wandb
