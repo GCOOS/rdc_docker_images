@@ -1,7 +1,7 @@
 # Ubuntu latest w/apache and mod_wsgi; Python3 only
 FROM ubuntu:22.04
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2023-09-09
+ENV REFRESHED_AT 2024-03-12
 ENV TZ=America/New_York
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ADD . /tmp
