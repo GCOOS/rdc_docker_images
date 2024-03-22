@@ -1,7 +1,7 @@
 # TENSORFLOW with GPU support
 From tensorflow/tensorflow:2.9.1-gpu
 MAINTAINER Bob Currier <robertdcurrier@gmail.com>
-ENV REFRESHED_AT 2022-09-09
+ENV REFRESHED_AT 2024-03-21
 
 WORKDIR /phytotracker5
 RUN apt-get update
